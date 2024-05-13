@@ -18,35 +18,23 @@ int main(){
      
 }
 
-void sort(int arr[], int start, int end){
-    int pvt = partition(arr, start, end);
-    if (end - start > 2){
-        sort(arr, start, pvt);
+void sort(int arr[], int start, int end){    
+    if (end > start){ //수정
+        int pvt = partition(arr, start, end);
+        sort(arr, start, pvt-1);
         sort(arr, pvt+1, end);
     }
 }
 
 int partition(int arr[], int start, int end){
-    std::vector<int> temp = {arr[(end - start)/2]}; //피봇을 미리 넣어둔다.
-    int pvt = 0;
+    int pivot = arr[end]; // 피봇을 배열의 마지막 요소로 선택
+    int i = start - 1;     // 좌측 배열의 마지막 요소
 
-    // 피봇 기준으로 정렬
-    for (int i = 0; i < end; i++){
-        if (i == (end - start)/2){
-            continue;
-        }
-        if (arr[i] > temp[pvt]){
-            temp.push_back(arr[i]);
-        }
-        else {
-            temp.insert(temp.begin()+pvt, arr[i]);
-            pvt++;
+    for (int j = start; j < end; j++) {
+        if (arr[j] < pivot) { // 피봇보다 작으면 i를 한칸 전진하고, 바꾼다. 만일 피봇보다 크다면 j만 전진한다.
+            std::swap(arr[++i], arr[j]);
         }
     }
-
-    for (int j = 0; j < temp.size()-1; j++){
-        arr[j] = temp[j];
-    }
-
-    return pvt; //피봇의 인덱스 값을 반환
+    std::swap(arr[i + 1], arr[end]); // 피봇의 위치를 바꾸어 작은 요소와 큰 요소를 나눔
+    return i + 1;                    // 피봇의 최종 위치 반환
 }
