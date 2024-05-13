@@ -30,7 +30,7 @@ void sort(std::vector<int> &arr, int p, int r){
 void merge(std::vector<int> &arr, int p, int q, int r) {
     std::vector<int> temp{};
     int i = p, j = q + 1;
-        while (i <= q && j <= r) {
+    while (i <= q && j <= r) {
         if (arr[i] <= arr[j]) {
             temp.push_back(arr[i]);
             i++;
